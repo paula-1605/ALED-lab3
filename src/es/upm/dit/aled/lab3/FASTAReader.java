@@ -206,7 +206,16 @@ public class FASTAReader {
 	 */
 	public List<Integer> searchSNV(byte[] pattern) {
 		// TODO
-		return null;
+		List<Integer> index = new ArrayList<Integer>();
+		for(int i=0; i<this.content.length; i++) {
+			try {
+				if(this.compareNumErrors(pattern,i)<=1)
+					index.add(i);
+			}catch (FASTAException e) {
+				break;
+			}
+		}
+		return index;
 	}
 
 	public static void main(String[] args) {
