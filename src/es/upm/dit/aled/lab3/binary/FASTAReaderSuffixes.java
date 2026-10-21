@@ -96,6 +96,34 @@ public class FASTAReaderSuffixes extends FASTAReader {
 			if(index==pattern.length) {
 				resultados.add(posSuffix);
 				found=true;
+				
+				//para hacerlo corretcamente y que aparezcan todos los posFuffixes en los resultados
+				//tengo que recorrer el array hacia delante y atrás para ver si también coincide
+				
+				//búsqueda hacia atrás
+				int i=1;
+				do {
+					index=0;
+					posSuffix=this.suffixes[m-i].suffixIndex;
+					while(index<pattern.length && posSuffix+index<content.length && pattern[index]==content[posSuffix+index])
+						index++;
+					
+					if(index==pattern.length) 
+						resultados.add(posSuffix);
+				}while (index==pattern.length);
+				
+				//para recorrerlo hacia delante es lo mismo que hacia atrás pero suffixes[] se incrementa hacia la derecha
+				i=1;
+				do {
+					index=0;
+					posSuffix=this.suffixes[m+i].suffixIndex;
+					while(index<pattern.length && posSuffix+index<content.length && pattern[index]==content[posSuffix+index])
+						index++;
+					
+					if(index==pattern.length) 
+						resultados.add(posSuffix);
+				}while (index==pattern.length);
+				
 			}else {
 				if(pattern[index]<content[posSuffix])
 				hi=m--;
